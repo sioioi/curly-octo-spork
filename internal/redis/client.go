@@ -8,6 +8,7 @@ import (
 	goredis "github.com/redis/go-redis/v9"
 )
 
+// 客户端
 type Client struct {
 	db *goredis.Client
 }
@@ -24,6 +25,8 @@ func (c *Client) Close() error {
 	return c.db.Close()
 }
 
+// 设置在线状态
+// 审查到此
 func (c *Client) SetOnline(ctx context.Context, sessionID string, ttl time.Duration) error {
 	key := fmt.Sprintf("session:%s:online", sessionID)
 	return c.db.Set(ctx, key, "1", ttl).Err()
