@@ -57,10 +57,14 @@ func main() {
 }
 
 func loadGatewayConfig() gatewayConfig {
+	// 接口地址
+	// entries addr
 	return gatewayConfig{
-		httpAddr:        getEnv("GATEWAY_HTTP_ADDR", ":8080"),
-		redisAddr:       getEnv("REDIS_ADDR", "127.0.0.1:6379"),
-		kafkaBrokers:    strings.Split(getEnv("KAFKA_BROKERS", "127.0.0.1:9092"), ","),
+		httpAddr:  getEnv("GATEWAY_HTTP_ADDR", ":8080"),
+		redisAddr: getEnv("REDIS_ADDR", "127.0.0.1:6379"),
+		// 11.30审核到 kafka
+		kafkaBrokers: strings.Split(getEnv("KAFKA_BROKERS", "127.0.0.1:9092"), ","),
+
 		userTopic:       getEnv("KAFKA_USER_TOPIC", "user-messages"),
 		sessionTTL:      time.Minute * 5,
 		inboxBlockAfter: time.Second * 5,
@@ -68,6 +72,8 @@ func loadGatewayConfig() gatewayConfig {
 }
 
 func getEnv(key, def string) string {
+	// 允许环境变量覆盖
+	// allow Envs cover
 	if val := os.Getenv(key); val != "" {
 		return val
 	}
