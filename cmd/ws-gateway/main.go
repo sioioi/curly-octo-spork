@@ -44,6 +44,7 @@ func main() {
 	})
 
 	router := gin.Default()
+
 	router.GET("/ws/:session_id", func(c *gin.Context) {
 		if err := handler.HandleSession(ctx, c); err != nil {
 			log.Printf("session handler error: %v", err)
@@ -65,7 +66,8 @@ func loadGatewayConfig() gatewayConfig {
 		// 11.30审核到 kafka
 		kafkaBrokers: strings.Split(getEnv("KAFKA_BROKERS", "127.0.0.1:9092"), ","),
 
-		userTopic:       getEnv("KAFKA_USER_TOPIC", "user-messages"),
+		userTopic: getEnv("KAFKA_USER_TOPIC", "user-messages"),
+
 		sessionTTL:      time.Minute * 5,
 		inboxBlockAfter: time.Second * 5,
 	}
